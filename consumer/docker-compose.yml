@@ -8,7 +8,7 @@ services:
     networks:
       - mynetwork
     volumes:
-      - app:/consumer/app
+      - ${PWD}/app:/consumer/app
 
 networks:
   mynetwork:
@@ -20,5 +20,5 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/Users/laurentlecornu/SynologyDrive/DASCI_ARCHIBIGD/Docker/TP/TP2_kafka/consumer/app'
+      device: ${PWD}/app
 

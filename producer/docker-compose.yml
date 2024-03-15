@@ -1,19 +1,19 @@
-version: '3'
+version: "3"
 
 services:
   producer:
     build: .
     stdin_open: true # docker run -i
-    tty: true # docker run -t
+    tty: true        # docker run -t
     container_name: producer
     ports:
       - '8000:8000'
-    restart: 'always'
+    restart: "always"
     command: /bin/bash
     networks:
       - mynetwork
     volumes:
-      - app:/publisher/app
+      - ${PWD}/app:/publisher/app
 
 networks:
   mynetwork:
@@ -25,4 +25,4 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/Users/brenoha/Documents/DaSci/BigDataAv/TP7/TP7_20240307/producer/app'
+      device: ${PWD}/app
