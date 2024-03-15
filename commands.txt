@@ -1,0 +1,28 @@
+cd kappa
+docker-compose up -d
+
+cd ../producer
+docker-compose up -d
+
+docker buildx prune -f
+
+docker exec -ti producer bash
+    cd app/; python generate-random-events.py
+
+docker exec -ti spark-master bash
+    cd ../spark-apps
+    python3 create_structure_cassandra.py
+    # docker network inspect mynetwork
+    # to check IP
+
+spark-submit \
+--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,com.datastax.spark:spark-cassandra-connector_2.12:3.5.0 \
+--conf spark.cassandra.connection.host=cassandra1 \
+--conf spark.cassandra.connection.port=9042 \
+data-pipeline-streaming_cassandra.py kafka-demo-events
+
+
+docker exec -ti cassandra1 bash
+    cqlsh
+
+    select * from weather_keyspace.weather_table ;
