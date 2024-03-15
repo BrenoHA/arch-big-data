@@ -10,7 +10,7 @@ import sys
 def writeToCassandra(df, epochId):
     df.write \
         .format("org.apache.spark.sql.cassandra") \
-        .options(table="transactions", keyspace="demo") \
+        .options(table="weather_table", keyspace="weather_keyspace") \
         .mode("append") \
         .save()
 

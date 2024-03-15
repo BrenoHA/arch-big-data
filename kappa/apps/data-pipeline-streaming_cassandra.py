@@ -11,11 +11,12 @@ import sys
 
 def main():
 
-    capteurSchema = StructType([
+    weatherSchema = StructType([
                 StructField("date",StringType(),False),
-                StructField("numero",IntegerType(),False),
-                StructField("capteur",StringType(),False),
-                StructField("valeur",FloatType(),False)
+                StructField("city",StringType(),False),
+                StructField("lat",FloatType(),False),
+                StructField("lon",FloatType(),False),
+                StructField("temperature",FloatType(),False)
             ])
 
     spark = SparkSession.builder \
@@ -37,14 +38,14 @@ def main():
         .option("startingOffsets", "latest") \
         .load()
 
-    df1 = df.selectExpr("CAST(value AS STRING)").select(from_json(col("value"),capteurSchema).alias("data")).select("data.*")
+    df1 = df.selectExpr("CAST(value AS STRING)").select(from_json(col("value"),weatherSchema).alias("data")).select("data.*")
     df1.printSchema()
 
     def writeToCassandra(writeDF, epochId):
         writeDF.write \
             .format("org.apache.spark.sql.cassandra")\
             .mode('append')\
-            .options(table="transactions1", keyspace="demo")\
+            .options(table="weather_table", keyspace="weather_keyspace")\
             .save()
 
     df1.writeStream \

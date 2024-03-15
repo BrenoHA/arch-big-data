@@ -3,7 +3,7 @@ clstr=Cluster(['172.19.0.3'])
 session=clstr.connect()
 
 qry=''' 
-CREATE KEYSPACE IF NOT EXISTS demo 
+CREATE KEYSPACE IF NOT EXISTS weather_keyspace
 WITH replication = {
   'class' : 'SimpleStrategy',
   'replication_factor' : 1
@@ -12,12 +12,13 @@ WITH replication = {
 session.execute(qry) 
 
 qry=''' 
-CREATE TABLE IF NOT EXISTS demo.transactions1 (
-   date text,
-   numero int,
-   capteur text,
-   valeur float,
-   PRIMARY KEY (date)
+CREATE TABLE IF NOT EXISTS weather_keyspace.weather_table (
+  date text,
+  city text,
+  lat float,
+  lon float,
+  temperature float,
+  PRIMARY KEY ((city, date))
 );'''
 
 session.execute(qry) 
