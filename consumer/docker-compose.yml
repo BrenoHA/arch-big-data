@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  consumer:
+    build: .
+    container_name: consumer
+    restart: "always"
+    networks:
+      - mynetwork
+    volumes:
+      - app:/consumer/app
+
+networks:
+  mynetwork:
+    external: true
+
+volumes:
+  app:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/Users/laurentlecornu/SynologyDrive/DASCI_ARCHIBIGD/Docker/TP/TP2_kafka/consumer/app'
+
