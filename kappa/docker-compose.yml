@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 services:
   zookeeper:
@@ -7,10 +7,11 @@ services:
     networks:
       - network1
     ports:
-      - "2181:2181"
+      - '2181:2181'
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+
   kafka:
     image: confluentinc/cp-kafka:7.4.3
     container_name: kafka
@@ -19,8 +20,8 @@ services:
     depends_on:
       - zookeeper
     ports:
-      - "9092:9092"
-      - "9091:9091"
+      - '9092:9092'
+      - '9091:9091'
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ADVERTISED_HOST_NAME: kafka:9092
@@ -28,12 +29,6 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      # KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      # KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      # KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
-      # KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
-      # KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      # KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
   kafdrop:
     image: obsidiandynamics/kafdrop:3.27.0
@@ -54,11 +49,11 @@ services:
     networks:
       - network1
     ports:
-      - "9080:8080"
-      - "7077:7077"
+      - '9080:8080'
+      - '7077:7077'
     volumes:
-       - ./apps:/opt/spark-apps
-       - ./data:/opt/spark-data
+      - ./apps:/opt/spark-apps
+      - ./data:/opt/spark-data
     environment:
       - SPARK_LOCAL_IP=spark-master
       - SPARK_WORKLOAD=master
@@ -69,8 +64,8 @@ services:
     networks:
       - network1
     ports:
-      - "9081:8080"
-      - "7002:7000"
+      - '9081:8080'
+      - '7002:7000'
     depends_on:
       - spark-master
     environment:
@@ -82,8 +77,8 @@ services:
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-a
     volumes:
-       - ./apps:/opt/spark-apps
-       - ./data:/opt/spark-data
+      - ./apps:/opt/spark-apps
+      - ./data:/opt/spark-data
 
   spark-worker-b:
     build: .
@@ -91,8 +86,8 @@ services:
     networks:
       - network1
     ports:
-      - "9082:8080"
-      - "7001:7000"
+      - '9082:8080'
+      - '7001:7000'
     depends_on:
       - spark-master
     environment:
@@ -104,28 +99,59 @@ services:
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-b
     volumes:
-        - ./apps:/opt/spark-apps
-        - ./data:/opt/spark-data
+      - ./apps:/opt/spark-apps
+      - ./data:/opt/spark-data
 
   cassandra1:
     image: cassandra:latest
     container_name: cassandra1
-    ports:
-      - "9042:9042"
-    environment:
-      - CASSANDRA_SEEDS=cassandra1,cassandra2
     networks:
       - network1
+    ports:
+      - '9042:9042'
+    environment:
+      - CASSANDRA_SEEDS=cassandra1,cassandra2
+
   cassandra2:
     image: cassandra:latest
     container_name: cassandra2
-    environment:
-      - CASSANDRA_SEEDS=cassandra1,cassandra2
     networks:
       - network1
+    environment:
+      - CASSANDRA_SEEDS=cassandra1,cassandra2
 
+  hadoop-master:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: hadoop-master
+    environment:
+      - CLUSTER_NAME=test
+    env_file:
+      - ./hadoop.env
+    volumes:
+      - hadoop_namenode:/hadoop/dfs/name
+    networks:
+      - network1
+    ports:
+      - '9870:9870' # Namenode UI
+      - '8088:8088' # Resource Manager UI
+
+  hadoop-slave1:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: hadoop-slave1
+    env_file:
+      - ./hadoop.env
+    volumes:
+      - hadoop_datanode1:/hadoop/dfs/data
+    networks:
+      - network1
+    # Additional ports can be exposed if required
 
 networks:
   network1:
     name: mynetwork
     driver: bridge
+
+volumes:
+  hadoop_namenode:
+  hadoop_datanode1:
+  # Add any other required volumes here
