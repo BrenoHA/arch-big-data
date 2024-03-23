@@ -1,5 +1,5 @@
 from cassandra.cluster import Cluster
-clstr=Cluster(['172.19.0.2'])
+clstr=Cluster(['172.18.0.1'])
 session=clstr.connect()
 
 qry=''' 

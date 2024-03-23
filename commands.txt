@@ -26,3 +26,6 @@ docker exec -ti cassandra1 bash
     cqlsh
 
     select * from weather_keyspace.weather_table ;
+
+cd ../batch_layer
+docker-compose up -d
