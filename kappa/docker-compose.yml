@@ -125,8 +125,6 @@ services:
     container_name: hadoop-master
     environment:
       - CLUSTER_NAME=test
-    env_file:
-      - ./hadoop.env
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
     networks:
@@ -138,8 +136,6 @@ services:
   hadoop-slave1:
     image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
     container_name: hadoop-slave1
-    env_file:
-      - ./hadoop.env
     volumes:
       - hadoop_datanode1:/hadoop/dfs/data
     networks:
