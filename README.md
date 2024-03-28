@@ -23,6 +23,7 @@ At the end the result achieved will be similar to the following demo video showi
 - [Kafka](https://kafka.apache.org/)
 - [Spark](https://spark.apache.org/)
 - [Cassandra](https://cassandra.apache.org/_/index.html)
+- [Docker](https://www.docker.com/)
 
 # 🔗 API - OpenWeatherMap
 
