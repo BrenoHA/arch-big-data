@@ -79,9 +79,12 @@ def main():
             
             weather_data = get_weather_data(latitude, longitude, api_key)
             weather_info = {
+                'date': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 "city": city,
-                "coord": weather_data["coord"],
-                "main": weather_data["main"]
+                "lon":weather_data["coord"]['lon'],
+                "lat":weather_data["coord"]['lat'],
+                "temperature": weather_data["main"]['temp'],
+                "feels_like": weather_data["main"]['feels_like'],
             }
             produce_to_kafka("kafka-weather-events", weather_info)
             print(weather_info)

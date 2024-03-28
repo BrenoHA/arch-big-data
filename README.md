@@ -36,6 +36,22 @@ To start this step we must first check the IP of the cassandra container to see 
 ```bash
 # Run in a terminal of the host machine
 docker network inspect mynetwork
+        "Containers": {
+            "213202b50b1dd176131fda5f791041972462f65fa518c4e4745575a36853f5d4": {
+                "Name": "cassandra2",
+                "EndpointID": "c0133ff4e345ad3d1e822739275a9d50f18870a65ee72e9f7476e8111aadf3da",
+                "MacAddress": "02:42:ac:13:00:04",
+                "IPv4Address": "172.19.0.4/16",
+                "IPv6Address": ""
+            },
+            "2cbebb0c267cb7825a66cff8ae72f595d7fa5ae9c88df6b4e6a11ab5626654db": {
+                "Name": "cassandra1",
+                "EndpointID": "d527b1ff7b01fca9adb0271c56802d624efc95df12e29392d7895db2332e598b",
+                "MacAddress": "02:42:ac:13:00:03",
+                "IPv4Address": "172.19.0.3/16",
+                "IPv6Address": ""
+            },
+
 ```
 
 If needed change the IP's in the line 2 of ```kappa/apps/create_structure_cassandra.py```:

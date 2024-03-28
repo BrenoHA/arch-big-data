@@ -1,5 +1,5 @@
 from cassandra.cluster import Cluster
-clstr=Cluster(['172.19.0.2'])
+clstr=Cluster(['172.19.0.5', '172.19.0.4'])
 session=clstr.connect()
 
 qry=''' 
@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS weather_keyspace.weather_table (
   lat float,
   lon float,
   temperature float,
+  feels_like float,
+  temperature_minus_feels_like float,
   PRIMARY KEY ((city, date))
 );'''
 
