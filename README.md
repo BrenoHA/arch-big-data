@@ -12,10 +12,7 @@ In the next sections will be provided the step by step of how to build and run t
 
 At the end the result achieved will be similar to the following demo video showing the final execution (starting the producer, than the spark processing, and visualizing the result in the Cassandra table):
 
-<video width="640" height="360" controls>
-  <source src="demo.webm" type="video/webm">
-  Your browser does not support the video tag.
-</video>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kukhTzwEq2E" frameborder="0" allowfullscreen></iframe>
 
 # ⚙️ Technologies
 
@@ -82,7 +79,9 @@ Open a bash session in the producer container and start the script `get-weather-
 
 ```bash
 docker exec -ti producer bash
-    > cd app/; python generate-random-events.py
+```
+```bash
+cd app/; python get-weather-data.py
 ```
 
 ## 5. Start spark streaming
@@ -110,8 +109,10 @@ After that we checked if the IP's are correct we just need to run the script `cr
 
 ```bash
 docker exec -ti spark-master bash
-    > cd ../spark-apps
-    > python3 create_structure_cassandra.py
+```
+```
+cd ../spark-apps
+python3 create_structure_cassandra.py
 ```
 
 ### 5.3 Start spark streaming
@@ -121,7 +122,8 @@ Now still inside the bash in the spark-master container just run the followinig 
 ```bash
 # Enter bash session in spark-master container
 docker exec -ti spark-master bash
-
+```
+```bash
 spark-submit \
 --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,com.datastax.spark:spark-cassandra-connector_2.12:3.5.0 \
 --conf spark.cassandra.connection.host=cassandra1 \
@@ -139,7 +141,9 @@ For visualizing the data in the table we need to open a bash session in on of th
 
 ```bash
 docker exec -ti cassandra1 bash
-    > cqlsh
+```
+```
+cqlsh
 ```
 
 After this command you will be in an interactive shell session in Cassandra, now just query the table to see the data:
@@ -147,6 +151,22 @@ After this command you will be in an interactive shell session in Cassandra, now
 ```sql
 select * from weather_keyspace.weather_table;
 ```
+
+# Batch Processing
+
+The primary goal of the project was to implement a full lambda architecture, but since the whole architecture is being implemented with docker containers on a single machine, after the implementation of the architecture with the speed layer we started to have problems with RAM that were not allowing a proper functioning of the containers. To solve that we tried to increase the maximum amount of resources available to the containers, but since the machines used in the tests of the container had only 16GB of RAM, additional containers were causing overflow of the RAM in the machine, so we could not implement in the available hardware the full architecture.
+
+To be able to test a batch processing using Spark a simple local processing was made to test a pyspark code that could be used in the complete architecture. The principle is simple:
+
+**1.** Get real time data from API (local_batch/get-weather-data.py)
+**2.** Saves data in a local json file (local_batch/get-weather-data.py)
+**3.** Script running pyspark to calculate informations like mean and variance of the data(local_batch/get-weather-data.py)
+
+The result is shown in this print of the result on the terminal:
+
+![alt text](image.png)
+
+So although it's not an actual implementation of a batch layer in the architecture it could be used in a real one with the proper modification to fit in the architecture, and it has the main go of using the pyspark functions to do batch-like calculations.
 
 # 👋 Authors
 
