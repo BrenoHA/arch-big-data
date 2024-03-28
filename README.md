@@ -159,8 +159,11 @@ The primary goal of the project was to implement a full lambda architecture, but
 To be able to test a batch processing using Spark a simple local processing was made to test a pyspark code that could be used in the complete architecture. The principle is simple:
 
 **1.** Get real time data from API (local_batch/get-weather-data.py)
+
 **2.** Saves data in a local json file (local_batch/get-weather-data.py)
+
 **3.** Script running pyspark to calculate informations like mean and variance of the data(local_batch/get-weather-data.py)
+
 
 The result is shown in this print of the result on the terminal:
 
