@@ -1,2 +1,2 @@
 .env 
-./local_batch/data.json
+local_batch/data.json
