@@ -1,4 +1,12 @@
-# Introduction
+# 📚 About the Project
+
+This is a project for the architecture and advanced big data course at [IMT Atlantique](https://www.imt-atlantique.fr/en).
+
+# ☁️ Introduction
+
+This project aims to conduct real-time analysis and monitoring of the biggest cities in France, with the purpose of deepening our understanding of the technologies required for implementing a lambda architecture.
+
+Focusing on the speed layer of the architecture, this project aims to understand how to handle real-time consumed data, utilizing the technologies proposed in the classroom.
 
 In the next sections will be provided the step by step of how to build and run the project, by creating the containers, the table in cassandra, executing the spark processing and then visualizing the data in Cassandra.
 
@@ -9,21 +17,28 @@ At the end the result achieved will be similar to the following demo video showi
   Your browser does not support the video tag.
 </video>
 
-# API - OpenWeatherMap
+# ⚙️ Technologies
+
+- [Python](https://www.python.org/)
+- [Kafka](https://kafka.apache.org/)
+- [Spark](https://spark.apache.org/)
+- [Cassandra](https://cassandra.apache.org/_/index.html)
+
+# 🔗 API - OpenWeatherMap
 
 API Description: Access current weather data for any location on Earth! We collect and process weather data from different sources such as global and local weather models, satellites, radars and a vast network of weather stations. Data is available in JSON, XML, or HTML format.
 
 [OpenWeatherMap API - Current Data](https://openweathermap.org/current#data)
 
-# Instructions
+# 🛠️ Instructions
 
 ## 0. Add the API key to the project
 
-For running this project is necessary to create an API Key for using the service below.
+Once you have cloned the repository you will need to create an account on the site below to get your api key, you will need to go to the apis section and generate a personal key to use.
 
 [OpenWheaterMap](https://openweathermap.org/)
 
-After doing this step, you have to add a file named `.env` exactly inside the app folder of the producer. Check the path:
+After doing this step, you must add a file named `.env` exactly inside the app folder of the producer. Check the path:
 
 ```
 > producer > app > .env
@@ -131,3 +146,7 @@ After this command you will be in an interactive shell session in Cassandra, now
 ```sql
 select * from weather_keyspace.weather_table;
 ```
+
+# 👋 Authors
+
+This project was made by [Breno Hasparyk](https://github.com/BrenoHA) and [Carlos Arguilar](https://github.com/CarlosArguilar)
