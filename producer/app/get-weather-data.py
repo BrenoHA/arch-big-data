@@ -89,7 +89,7 @@ def main():
             produce_to_kafka("kafka-weather-events", weather_info)
             print(weather_info)
 
-        time.sleep(10)
+        time.sleep(2)
 
 if __name__ == "__main__":
     main()
