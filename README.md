@@ -1,4 +1,14 @@
 
+# Instructions
+
+In the next sections will be provided the step by step of how to build and run the project, by creating the containers, the table in cassandra, executing the spark processing and then visualizing the data in Cassandra.
+
+At the end the result achieved will be similar to the following demo video showing the final execution (starting the producer, than the spark processing, and visualizing the result in the Cassandra table):
+
+<video width="640" height="360" controls>
+  <source src="demo.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
 
 ## 1. Build and run the containers of the structure with the apache, kafka, spark and cassandra:
 
