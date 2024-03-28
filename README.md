@@ -1,6 +1,6 @@
 # 📚 About the Project
 
-This is a project for the architecture and advanced big data course at [IMT Atlantique](https://www.imt-atlantique.fr/en).
+This is a project for the Advanced Big Data architecture course at [IMT Atlantique](https://www.imt-atlantique.fr/en).
 
 # ☁️ Introduction
 
