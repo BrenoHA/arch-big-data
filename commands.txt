@@ -7,7 +7,7 @@ docker-compose up -d
 docker buildx prune -f
 
 docker exec -ti producer bash
-    cd app/; python generate-random-events.py
+    cd app/; python get-weather-data.py
 
 docker exec -ti spark-master bash
     cd ../spark-apps
