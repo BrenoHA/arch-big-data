@@ -12,7 +12,7 @@ In the next sections will be provided the step by step of how to build and run t
 
 At the end the result achieved will be similar to the following demo video showing the final execution (starting the producer, than the spark processing, and visualizing the result in the Cassandra table):
 
-(Demo Video)[https://www.youtube.com/embed/kukhTzwEq2E]
+[![Demo Video](https://img.youtube.com/vi/kukhTzwEq2E/0.jpg)](https://www.youtube.com/watch?v=kukhTzwEq2E)
 
 # ⚙️ Technologies
 
@@ -80,6 +80,7 @@ Open a bash session in the producer container and start the script `get-weather-
 ```bash
 docker exec -ti producer bash
 ```
+
 ```bash
 cd app/; python get-weather-data.py
 ```
@@ -110,6 +111,7 @@ After that we checked if the IP's are correct we just need to run the script `cr
 ```bash
 docker exec -ti spark-master bash
 ```
+
 ```
 cd ../spark-apps
 python3 create_structure_cassandra.py
@@ -123,6 +125,7 @@ Now still inside the bash in the spark-master container just run the followinig 
 # Enter bash session in spark-master container
 docker exec -ti spark-master bash
 ```
+
 ```bash
 spark-submit \
 --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,com.datastax.spark:spark-cassandra-connector_2.12:3.5.0 \
@@ -142,6 +145,7 @@ For visualizing the data in the table we need to open a bash session in on of th
 ```bash
 docker exec -ti cassandra1 bash
 ```
+
 ```
 cqlsh
 ```
@@ -163,7 +167,6 @@ To be able to test a batch processing using Spark a simple local processing was 
 **2.** Saves data in a local json file (**local_batch/get-weather-data.py**)
 
 **3.** Script running pyspark to calculate informations like mean and variance of the data (**local_batch/batch_process.py**).
-
 
 The result is shown in this print of the result on the terminal:
 
