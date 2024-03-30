@@ -12,7 +12,7 @@ In the next sections will be provided the step by step of how to build and run t
 
 At the end the result achieved will be similar to the following demo video showing the final execution (starting the producer, than the spark processing, and visualizing the result in the Cassandra table):
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/kukhTzwEq2E" frameborder="0" allowfullscreen></iframe>
+(Demo Video)[https://www.youtube.com/embed/kukhTzwEq2E]
 
 # ⚙️ Technologies
 
